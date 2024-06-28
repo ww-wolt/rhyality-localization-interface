@@ -1,56 +1,76 @@
-
 const PORT = 4444;
 
-import Fastify from 'fastify'
-import fastifyWebsocket from '@fastify/websocket';
-import cors from '@fastify/cors'
+import Fastify from "fastify";
+import fastifySocketIO from "fastify-socket.io";
+import pino from "pino";
+import pretty from "pino-pretty";
 
-import { getNetworkIP } from './utils.js';
+import cors from "@fastify/cors";
+
+import { getNetworkIP } from "./utils.js";
+// import logger from './logger.js';
+
+const app = Fastify({
+  logger: pino({
+    transport: {
+      target: "pino-pretty",
+      options: {
+        colorize: true,
+      },
+    },
+  }),
+});
+
+app.register(fastifySocketIO, {
+  cors: {
+    origin: true,
+    credentials: true,
+  },
+});
+
+app.get("/", async () => {
+  return "Socket Server working!";
+});
+
+app.get("/ping", async () => {
+  return "pong";
+});
 
 
-const fastify = Fastify({
-  // logger: true
-})
 
-fastify.register(fastifyWebsocket);
-await fastify.register(cors, { 
-  origin: true,
-})
 
-// Declare a route
-fastify.get('/', async function handler (request, reply) {
-  return { hello: 'world' }
-})
+// // Declare a route
+// app.get('/', async function handler (request, reply) {
+//   return { hello: 'world' }
+// })
 
-// Define a WebSocket route
-fastify.get('/ws', { websocket: true }, (connection, req) => {
-  console.log('Client connected');
 
-  // Handle incoming messages
-  connection.socket.on('message', message => {
-    console.log('Received message:', message.toString());
+app.ready((err) => {
+  if (err) throw err;
 
-    // Echo the message back to the client
-    connection.socket.send(`Echo: ${message}`);
+  app.io.on("connect", (socket) =>
+    console.info("Socket connected!", socket.id)
+  );
+
+  app.io.on("connection", (socket) => {
+    console.log("a user connected");
+  
+    socket.on("disconnect", () => {
+      console.log("User disconnected");
+    });
   });
 
-  // Handle connection close
-  connection.socket.on('close', () => {
-    console.log('Client disconnected');
-  });
+  
 });
 
 // Run the server!
 try {
   const networkIp = getNetworkIP();
-  await fastify.listen({ port: PORT })
-  console.log('Server listening on http://localhost:' + PORT);
+  await app.listen({ port: PORT });
+  console.log("Server listening on http://localhost:" + PORT);
   console.log(`Server listening on http://${networkIp}:${PORT}`);
-
 } catch (err) {
-  fastify.log.error(err)
-  console.error(err)
-  process.exit(1)
+  app.log.error(err);
+  console.error(err);
+  process.exit(1);
 }
-
-
