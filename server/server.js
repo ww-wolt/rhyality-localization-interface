@@ -26,6 +26,7 @@ app.register(fastifySocketIO, {
     origin: true,
     credentials: true,
   },
+  allowEIO3: true,
 });
 
 app.get("/", async () => {
@@ -36,14 +37,10 @@ app.get("/ping", async () => {
   return "pong";
 });
 
-
-
-
 // // Declare a route
 // app.get('/', async function handler (request, reply) {
 //   return { hello: 'world' }
 // })
-
 
 app.ready((err) => {
   if (err) throw err;
@@ -54,13 +51,23 @@ app.ready((err) => {
 
   app.io.on("connection", (socket) => {
     console.log("a user connected");
-  
+
+    // Listen for any event from the client
+    socket.onAny((event, ...args) => {
+      console.log(`Event received: ${event}`, args);
+
+      // Broadcast the event to all connected clients
+      // app.io.emit(event, ...args);
+    });
+
+    socket.on("hello", () => {
+      console.info("received hello!");
+    });
+
     socket.on("disconnect", () => {
       console.log("User disconnected");
     });
   });
-
-  
 });
 
 // Run the server!
