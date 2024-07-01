@@ -5,12 +5,7 @@ import fastifySocketIO from "fastify-socket.io";
 import pino from "pino";
 import pretty from "pino-pretty";
 
-import cors from "@fastify/cors";
-import {readFileSync} from "fs";
-import path from "path";
-
 import { getNetworkIP } from "./utils.js";
-// import logger from './logger.js';
 
 const app = Fastify({
   logger: pino({
@@ -21,10 +16,6 @@ const app = Fastify({
       },
     },
   }),
-  https: {
-    key: readFileSync( "localhost+2-key.pem"),
-    cert: readFileSync("localhost+2.pem")
-  }
 });
 
 app.register(fastifySocketIO, {
@@ -80,8 +71,8 @@ app.ready((err) => {
 try {
   const networkIp = getNetworkIP();
   await app.listen({ port: PORT, host: '0.0.0.0' });
-  console.log("Server listening on https://localhost:" + PORT);
-  console.log(`Server listening on https://${networkIp}:${PORT}`);
+  console.log("Server listening on http://localhost:" + PORT);
+  console.log(`Server listening on http://${networkIp}:${PORT}`);
 } catch (err) {
   app.log.error(err);
   console.error(err);

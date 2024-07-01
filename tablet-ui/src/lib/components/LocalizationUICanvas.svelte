@@ -6,7 +6,7 @@
 
 	const NUM_CIRCLES = 4;
 	const CIRCLE_DIAMETER = Math.min(window.innerWidth, window.innerHeight) * 0.8;
-	const TOUCHPOINT_DIAMETER = CIRCLE_DIAMETER * 0.08;
+	const TOUCHPOINT_DIAMETER = CIRCLE_DIAMETER * 0.1;
 
 
 	let canvasWrapper;

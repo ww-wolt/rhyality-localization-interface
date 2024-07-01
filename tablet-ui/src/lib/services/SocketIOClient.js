@@ -22,7 +22,6 @@ export function createSocket(socketServerAdress) {
         transports: ['websocket'],
         query: { clientType: ORIGIN },
         reconnectionDelay: 100,
-        rejectUnauthorized: false
     });
 
     connected.set(true);
@@ -48,7 +47,7 @@ export function sendLocalization(x, y) {
         eventType: EVENT_TYPES.EVENT,
         localization: {
            x,
-           y,
+           y: -y, // hacky y flip
            angle,
            radius
         },

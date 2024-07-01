@@ -3,7 +3,7 @@
 	import { io } from 'socket.io-client';
 	import LocalizationUICanvas from '$lib/components/LocalizationUICanvas.svelte';
 
-	let socketServerAdress = 'https://192.168.178.45:4444';
+	let socketServerAdress = 'http://192.168.178.45:4444';
 </script>
 
 {#if $connected}

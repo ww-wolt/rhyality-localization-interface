@@ -5,7 +5,7 @@
   "main": "server.js",
   "author": "Jonas Wolter",
   "scripts": {
-    "start": "NODE_EXTRA_CA_CERTS='$(mkcert -CAROOT)/rootCA.pem' node server.js"
+    "start": "node server.js"
   },
   "dependencies": {
     "@fastify/cors": "^9.0.1",
