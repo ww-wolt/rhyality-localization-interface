@@ -1,6 +1,13 @@
 import { sveltekit } from '@sveltejs/kit/vite';
 import { defineConfig } from 'vite';
+import mkcert from'vite-plugin-mkcert'
+import { qrcode } from 'vite-plugin-qrcode';
 
 export default defineConfig({
-	plugins: [sveltekit()]
+	server: {
+		https: true
+	  },
+	plugins: [sveltekit() , 
+		mkcert(),
+		qrcode()]
 });
