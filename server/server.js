@@ -53,6 +53,12 @@ app.ready((err) => {
     socket.onAny((event, ...args) => {
       console.log(`Event received: ${event}`, args);
 
+      // Broadcast to everyone except the sender
+      socket.broadcast.emit(event, args);
+
+      // reply to the sender
+      // socket.emit('REPLY_MESSAGE', `Reply to your message: ${message}`);
+
       // Broadcast the event to all connected clients
       // app.io.emit(event, ...args);
     });

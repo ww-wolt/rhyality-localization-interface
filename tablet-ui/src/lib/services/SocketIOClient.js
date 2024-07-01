@@ -1,6 +1,8 @@
+
+const SOCKET_SERVER_PORT = 4444;
+
 import { io } from 'socket.io-client';
 import { writable } from "svelte/store";
-
 export const connected = writable(false);
 
 let socket;
@@ -16,8 +18,8 @@ const EVENT_TYPES = {
     ACKNOWLEDGMENT: 'acknowledgment',
 }
 
-export function createSocket(socketServerAdress) {
-    socket = io(socketServerAdress, {
+export function createSocket() {
+    socket = io(getSocketAdress(), {
         reconnection: true,
         transports: ['websocket'],
         query: { clientType: ORIGIN },
@@ -61,6 +63,20 @@ function wrapToRange(x, min, max) {
     return ((x - min) % d + d) % d + min;
 }
 
-    
+function getSocketAdress() {
+    try {
+   
+        // Parse the URL
+        const url = new URL(window.location.href);
 
-// socket.emit('hello', { hi: 'yo' });
+        // Construct the base URL
+        const baseUrl = `${url.protocol}//${url.hostname}`;
+
+        // Return socket url
+       return `${baseUrl}:${SOCKET_SERVER_PORT}`;
+
+    } catch (error) {
+        console.error('Socket URL retrieval error:', error);
+        return null;
+    }
+}

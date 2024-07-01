@@ -2,8 +2,6 @@
 	import { connected, createSocket } from '$lib/services/SocketIOClient.js';
 	import { io } from 'socket.io-client';
 	import LocalizationUICanvas from '$lib/components/LocalizationUICanvas.svelte';
-
-	let socketServerAdress = 'http://192.168.178.45:4444';
 </script>
 
 {#if $connected}
@@ -11,8 +9,8 @@
 {:else}
 	<div class="server-setup">
 		<h2>Connect to server</h2>
-		<input type="text" bind:value="{socketServerAdress}" placeholder="Enter server IP address">
-		<button on:click={() => createSocket(socketServerAdress)}>Connect</button>
+		<!-- <input type="text" bind:value="{socketServerAdress}" placeholder="Enter server IP address"> -->
+		<button on:click={() => createSocket()}>Connect</button>
 	</div>
 	 
 {/if}
