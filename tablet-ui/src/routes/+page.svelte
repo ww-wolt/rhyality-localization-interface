@@ -1,43 +1,54 @@
 <script>
 	import { connected, createSocket } from '$lib/services/SocketIOClient.js';
-	import { io } from 'socket.io-client';
 	import LocalizationUICanvas from '$lib/components/LocalizationUICanvas.svelte';
+	import DeviceList from '$lib/components/DeviceList.svelte';
+	import LocalizationInfo from '$lib/components/LocalizationInfo.svelte';
+	import { onMount } from 'svelte';
+
+	onMount(async () => {
+		createSocket();
+	});
 </script>
 
+<div class="title-wrapper">
+	<h1>Rhyality<br> Localization</h1>
+</div>
+
 {#if $connected}
-	<LocalizationUICanvas/>
+	<LocalizationUICanvas />
+	<DeviceList/>
+	<LocalizationInfo/>
 {:else}
-	<div class="server-setup">
-		<h2>Connect to server</h2>
-		<!-- <input type="text" bind:value="{socketServerAdress}" placeholder="Enter server IP address"> -->
-		<button on:click={() => createSocket()}>Connect</button>
+	<div class="error-wrapper">
+		<h1>-.-</h1>
+		<p>No Connection</p>
 	</div>
-	 
 {/if}
 
 <style>
-	.server-setup{
+	.error-wrapper {
 		display: flex;
 		flex-direction: column;
 		align-items: center;
 		justify-content: center;
 		height: 100vh;
-		/* gap: 1rem; */
 	}
 
-	.server-setup h2{
-		margin-bottom: 1rem;
+	.error-wrapper h1 {
+		font-size: 3rem;
+		font-weight: normal !important;
+		margin: 0;
 	}
 
-	.server-setup input{
-		margin-bottom: 1rem;
+	.title-wrapper {
+		position: fixed;
+		left: 2rem;
+		top: 2rem;
 	}
 
-	.server-setup button{
-		padding: 0.5rem 1rem;
+	.title-wrapper h1{
+		font-size: 1.5rem;
+		font-weight: 500;
+		margin: 0;
 	}
 </style>
-
-<!-- <h1>Welcome to SvelteKit</h1>
-<p>Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation</p>
-<button on:click={socket.emit('hello', { hi: 'yo' })}>Say Hello</button> -->

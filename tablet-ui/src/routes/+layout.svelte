@@ -14,5 +14,6 @@
         height:100%; 
         overflow:hidden;
         color: white;
+        font-weight: 500;
     }
 </style>

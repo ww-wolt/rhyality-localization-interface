@@ -17,7 +17,7 @@ udpPort.on("message", function (oscMsg, timeTag, info) {
 // Open the socket.
 udpPort.open();
 
-// When the port is read, send an OSC message to, say, SuperCollider
+// When the port is read, send an OSC message to someone
 udpPort.on("ready", function () {
   // ...
 });

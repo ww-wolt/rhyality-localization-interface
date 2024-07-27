@@ -60,11 +60,19 @@
 					sendLocalizationData();
 				}
 
-				p5.mouseClicked = () => {
+				p5.mousePressed = () => {
 					localizationX = p5.mouseX;
 					localizationY = p5.mouseY;
 					sendLocalizationData();
 				}
+
+				p5.mouseDragged = () => {
+					localizationX = p5.mouseX;
+					localizationY = p5.mouseY;
+					sendLocalizationData();
+				}
+
+
 			};
 
 			p5.windowResized = () => {

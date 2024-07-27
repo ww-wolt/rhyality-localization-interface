@@ -5,18 +5,19 @@ import { io } from 'socket.io-client';
 import { writable } from "svelte/store";
 export const connected = writable(false);
 
+export const x = writable(null);
+export const y = writable(null);
+export const angle = writable(null);
+export const radius = writable(null);
+
 let socket;
 // createSocket();
 
 const ORIGIN = 'tablet';
 const EVENTS = {
     LOCALIZATION_UPDATE: `${ORIGIN}:localization-update`,
+    ACKNOWLEDGMENT: `${ORIGIN}:acknowledgment`,
 };
-
-const EVENT_TYPES = {
-    EVENT: 'event',
-    ACKNOWLEDGMENT: 'acknowledgment',
-}
 
 export function createSocket() {
     socket = io(getSocketAdress(), {
@@ -26,12 +27,25 @@ export function createSocket() {
         reconnectionDelay: 100,
     });
 
-    connected.set(true);
+    connected.set(false);
 
     // receive acknowledgment event
-    socket.on('acknowledgment', (data) => {
-        console.log('acknowledgment', data);
+    // socket.on('acknowledgment', (data) => {
+    //     console.log('acknowledgment', data);
+    // });
+
+    socket.on('connect', () => {
+        connected.set(true);
     });
+
+    socket.on('disconnect', () => {
+        connected.set(false);
+    });
+
+    socket.on('tablet:localization-update', (data) => {
+
+    });
+       
 }
 
 // takes x and y as normalized input between -1 and 1
@@ -46,16 +60,22 @@ export function sendLocalization(x, y) {
         eventName: EVENTS.LOCALIZATION_UPDATE,
         origin: ORIGIN,
         timestamp:  performance.now(),
-        eventType: EVENT_TYPES.EVENT,
         localization: {
            x,
-           y: -y, // hacky y flip
+           y: -y, // hacky y axis flip
            angle,
            radius
         },
     };
-    // console.log("send event", EVENTS.LOCALIZATION_UPDATE, data)
     socket.emit(EVENTS.LOCALIZATION_UPDATE, data);
+    updateLocalizationStores(data);
+}
+
+function updateLocalizationStores(data) {
+    x.set(data.localization.x);
+    y.set(data.localization.y);
+    angle.set(data.localization.angle);
+    radius.set(data.localization.radius);
 }
 
 function wrapToRange(x, min, max) {
