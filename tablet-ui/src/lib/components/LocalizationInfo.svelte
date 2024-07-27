@@ -2,7 +2,7 @@
     import { x, y, angle, radius } from '$lib/services/SocketIOClient.js';
 </script>
 
-{#if $x && $y && $angle && $radius}
+{#if $x != null && $y != null && $angle != null && $radius != null}
     <div class="wrapper">
         <p>x: {$x.toFixed(2)} &nbsp; y: {$y.toFixed(2)}</p>
         <p>a: {$angle.toFixed(0)}° &nbsp; r: {$radius.toFixed(2)}</p>

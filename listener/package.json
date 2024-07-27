@@ -6,8 +6,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node listener.js",
-    "dev": "nodemon index.js --ext js,pde --signal SIGHUP"
+    "start": "node listener.js"
   },
   "author": "Jonas Wolter",
   "license": "ISC",

@@ -5,12 +5,13 @@
 	import p5 from 'p5';
 
 	const NUM_CIRCLES = 4;
-	const CIRCLE_DIAMETER = Math.min(window.innerWidth, window.innerHeight) * 0.8;
-	const TOUCHPOINT_DIAMETER = CIRCLE_DIAMETER * 0.1;
+	const CIRCLE_DIAMETER =  0.8;
+	const TOUCHPOINT_DIAMETER = 0.1;
 
 
 	let canvasWrapper;
 
+	let circleDiameter;
 	let localizationX = 0, localizationY = 0;
 	let centerX, centerY;
 
@@ -20,14 +21,19 @@
 			p5.setup = function () {
 				p5.createCanvas(window.innerWidth, window.innerHeight);
 
-				centerX = p5.width / 2;
-				centerY = p5.height / 2;
+				initVariables();
 
 				localizationX = centerX;
 				localizationY = centerY;
 
 				sendLocalizationData();
 			};
+
+			function initVariables () {
+				circleDiameter = Math.min(window.innerWidth, window.innerHeight) * CIRCLE_DIAMETER
+				centerX = p5.width / 2;
+				centerY = p5.height / 2;
+			}
 
 			p5.draw = () => {
 				let backgroundColor = p5.color(0, 0, 0, 255);
@@ -42,7 +48,7 @@
 					p5.strokeWeight(1);
 					p5.noFill();
 
-					const diameter = CIRCLE_DIAMETER * (i + 1) / NUM_CIRCLES;
+					const diameter = circleDiameter * (i + 1) / NUM_CIRCLES;
 					p5.circle(centerX, centerY, diameter);
 				}
 
@@ -50,7 +56,7 @@
 				p5.strokeWeight(4);
 				p5.stroke(198, 42, 136);
 				p5.fill(198, 42, 136, 127);
-				p5.circle(localizationX, localizationY, TOUCHPOINT_DIAMETER);
+				p5.circle(localizationX, localizationY, circleDiameter * 0.1);
 
 				if(p5.touches.length > 0){
 
@@ -77,12 +83,13 @@
 
 			p5.windowResized = () => {
                 p5.resizeCanvas(window.innerWidth, window.innerHeight);
+				initVariables();
             };
 
 			function sendLocalizationData(){
 				// Normalized localization
-				const normalizedX = (localizationX - centerX) / (CIRCLE_DIAMETER/2);
-				const normalizedY = (localizationY - centerY) / (CIRCLE_DIAMETER/2);
+				const normalizedX = (localizationX - centerX) / (circleDiameter/2);
+				const normalizedY = (localizationY - centerY) / (circleDiameter/2);
 				sendLocalization(normalizedX, normalizedY);
 			}
 		};

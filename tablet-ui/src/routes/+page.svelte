@@ -1,7 +1,7 @@
 <script>
 	import { connected, createSocket } from '$lib/services/SocketIOClient.js';
 	import LocalizationUICanvas from '$lib/components/LocalizationUICanvas.svelte';
-	import DeviceList from '$lib/components/DeviceList.svelte';
+	import ClientList from '$lib/components/ClientList.svelte';
 	import LocalizationInfo from '$lib/components/LocalizationInfo.svelte';
 	import { onMount } from 'svelte';
 
@@ -16,7 +16,7 @@
 
 {#if $connected}
 	<LocalizationUICanvas />
-	<DeviceList/>
+	<ClientList/>
 	<LocalizationInfo/>
 {:else}
 	<div class="error-wrapper">

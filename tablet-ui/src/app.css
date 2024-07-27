@@ -42,3 +42,8 @@ body{
     height:100%;
     overflow: hidden;
 }
+
+* {
+    -webkit-user-select: none !important;
+    user-select: none !important;
+}
