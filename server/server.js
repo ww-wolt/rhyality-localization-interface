@@ -7,6 +7,14 @@ import pretty from "pino-pretty";
 
 import { getNetworkIP } from "./utils.js";
 
+const ORIGIN = "server";
+const CLIENT_NAME = "Server";
+
+const EVENTS = {
+  LOCALIZATION_UPDATE: `${ORIGIN}:localization-update`,
+  ACKNOWLEDGMENT: `${ORIGIN}:acknowledgment`,
+};
+
 const app = Fastify({
   logger: pino({
     transport: {
@@ -54,13 +62,24 @@ app.ready((err) => {
       console.log(`Event received: ${event}`, args);
 
       // Broadcast to everyone except the sender
-      socket.broadcast.emit(event, args);
+      socket.broadcast.emit(event, ...args);
 
       // reply to the sender
       // socket.emit('REPLY_MESSAGE', `Reply to your message: ${message}`);
 
       // Broadcast the event to all connected clients
       // app.io.emit(event, ...args);
+    });
+
+    socket.on("tablet:localization-update", (data) => {
+      // Send acknowledgment back
+      const acknowledgmentData = {
+        eventName: EVENTS.ACKNOWLEDGMENT,
+        origin: ORIGIN,
+        clientName: CLIENT_NAME,
+        originalTimestamp: data.timestamp,
+      };
+      socket.emit(EVENTS.ACKNOWLEDGMENT, acknowledgmentData);
     });
 
     socket.on("hello", () => {
@@ -76,7 +95,7 @@ app.ready((err) => {
 // Run the server!
 try {
   const networkIp = getNetworkIP();
-  await app.listen({ port: PORT, host: '0.0.0.0' });
+  await app.listen({ port: PORT, host: "0.0.0.0" });
   console.log("Server listening on http://localhost:" + PORT);
   console.log(`Server listening on http://${networkIp}:${PORT}`);
 } catch (err) {

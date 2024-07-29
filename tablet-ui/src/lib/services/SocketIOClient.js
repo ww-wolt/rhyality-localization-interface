@@ -48,18 +48,26 @@ export function createSocket() {
 	});
 
 	socket.on('listener:acknowledgment', (data) => {
-		const clientName = data[0].clientName;
-        // Divide by 2 to get an estimate of the latency in one direction
-		const latency = (performance.now() - data[0].originalTimestamp) / 2;
-		console.log(clientName + ': Latency: ' + latency + 'ms');
-
-		clientsObject[clientName] = {
-			latency: latency,
-			lastUpdate: performance.now()
-		};
-
-        updateClientList();
+		handleAcknoledgment(data);
 	});
+
+	socket.on('server:acknowledgment', (data) => {
+		handleAcknoledgment(data);
+	});
+}
+
+function handleAcknoledgment(data) {
+	const clientName = data.clientName;
+	// Divide by 2 to get an estimate of the latency in one direction
+	const latency = (performance.now() - data.originalTimestamp) / 2;
+	console.log(clientName + ': Latency: ' + latency + 'ms');
+
+	clientsObject[clientName] = {
+		latency: latency,
+		lastUpdate: performance.now()
+	};
+
+	updateClientList();
 }
 
 // Check every 100ms for non upadted clients
@@ -76,10 +84,19 @@ setInterval(removeOldClientsFromList, 100);
 function updateClientList() {
 	const list = [];
 	for (const [key, value] of Object.entries(clientsObject)) {
-		console.log(`${key}: ${value}`);
 		list.push({ name: key, latency: value.latency });
 	}
 	list.sort((a, b) => a.name.localeCompare(b.name));
+
+	// If list contains object with name "Server" move it to the start of the list
+	const serverIndex = list.findIndex((element) => element.name === 'Server');
+	if (serverIndex !== -1) {
+		// Remove it from the list
+		const server = list.splice(serverIndex, 1);
+		// Add it to the start of the list
+		list.unshift(server[0]);
+	}
+
 	clientList.set(list);
 }
 

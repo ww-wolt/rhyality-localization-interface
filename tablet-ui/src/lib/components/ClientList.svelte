@@ -5,9 +5,8 @@
     
     import { clientList } from '$lib/services/SocketIOClient.js';
 
-	$: console.log('clientList:', $clientList);
-
     function getColorClass(latency) {
+        latency = Math.round(latency);
         if (latency <= LATENCY_GOOD_THRESHOLD) {
             return 'green';
         } else if (latency <= LATENCY_OK_THRESHOLD) {
@@ -25,7 +24,7 @@
         <p>Clients</p>
         <div class="list">
             {#each $clientList as client}
-                <p>{client.name} &nbsp; <span class={getColorClass(client.latency)}>{client.latency.toFixed(0)} ms</span></p>
+                <p>{client.name} &nbsp; <span class={getColorClass(client.latency)}>{ Math.round(client.latency)} ms</span></p>
             {/each}
         </div>
     {/if}

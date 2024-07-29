@@ -30,10 +30,10 @@ export function createSocket() {
 
     socket.on('tablet:localization-update', (data) => {
         console.log('tablet:localization-update', data);
-        oscBridge.sendFloat("x", data[0].localization.x);
-        oscBridge.sendFloat("y", data[0].localization.y);
-        oscBridge.sendFloat("angle", data[0].localization.angle);
-        oscBridge.sendFloat("radius", data[0].localization.radius);
+        oscBridge.sendFloat("x", data.localization.x);
+        oscBridge.sendFloat("y", data.localization.y);
+        oscBridge.sendFloat("angle", data.localization.angle);
+        oscBridge.sendFloat("radius", data.localization.radius);
 
 
         // Send acknowledgment back
@@ -41,7 +41,7 @@ export function createSocket() {
             eventName: EVENTS.ACKNOWLEDGMENT,
             origin: ORIGIN,
             clientName: CLIENT_NAME,
-            originalTimestamp: data[0].timestamp,
+            originalTimestamp: data.timestamp,
         };
         socket.emit(EVENTS.ACKNOWLEDGMENT, acknowledgmentData);
     });
