@@ -15,6 +15,8 @@
 	let localizationX = 0, localizationY = 0;
 	let centerX, centerY;
 
+	let touched = false;
+
 	onMount(async () => {
 		let sketch = function (p5) {
 
@@ -26,7 +28,7 @@
 				localizationX = centerX;
 				localizationY = centerY;
 
-				sendLocalizationData();
+				// sendLocalizationData();
 			};
 
 			function initVariables () {
@@ -52,30 +54,37 @@
 					p5.circle(centerX, centerY, diameter);
 				}
 
-				// touchpoint circle
-				p5.strokeWeight(4);
-				p5.stroke(198, 42, 136);
-				p5.fill(198, 42, 136, 127);
-				p5.circle(localizationX, localizationY, circleDiameter * 0.1);
-
+				
+				
 				if(p5.touches.length > 0){
 
 					// Update localization variables and send data
 					localizationX = p5.touches[0].x 
 					localizationY = p5.touches[0].y 
 					sendLocalizationData();
+					touched = true;
 				}
 
 				p5.mousePressed = () => {
 					localizationX = p5.mouseX;
 					localizationY = p5.mouseY;
 					sendLocalizationData();
+					touched = true;
 				}
 
 				p5.mouseDragged = () => {
 					localizationX = p5.mouseX;
 					localizationY = p5.mouseY;
 					sendLocalizationData();
+					touched = true;
+				}
+
+				// Draw touchpoint circle
+				if(touched){
+					p5.strokeWeight(4);
+					p5.stroke(198, 42, 136);
+					p5.fill(198, 42, 136, 127);
+					p5.circle(localizationX, localizationY, circleDiameter * 0.1);
 				}
 
 

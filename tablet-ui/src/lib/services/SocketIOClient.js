@@ -27,7 +27,9 @@ export function createSocket() {
 		reconnection: true,
 		transports: ['websocket'],
 		query: { clientType: ORIGIN },
-		reconnectionDelay: 100
+		reconnectionDelay: 100,
+		reconnectionDelayMax: 300,
+		timeout: 1000,
 	});
 
 	connected.set(false);

@@ -1,12 +1,16 @@
 <script>
-	import { clientList } from '$lib/services/SocketIOClient.js';
+	
+    const LATENCY_GOOD_THRESHOLD = 5;
+    const LATENCY_OK_THRESHOLD = 10;
+    
+    import { clientList } from '$lib/services/SocketIOClient.js';
 
 	$: console.log('clientList:', $clientList);
 
     function getColorClass(latency) {
-        if (latency < 5) {
+        if (latency <= LATENCY_GOOD_THRESHOLD) {
             return 'green';
-        } else if (latency < 10) {
+        } else if (latency <= LATENCY_OK_THRESHOLD) {
             return 'orange';
         } else {
             return 'red';
