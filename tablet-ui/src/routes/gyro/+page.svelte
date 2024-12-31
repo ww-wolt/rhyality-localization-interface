@@ -40,9 +40,17 @@
 
 <div class="flex-container">
     <h1>Gyro</h1>
-    <button onclick={handleGyroActivationClick}>Activate</button>
-    <div id="slider"></div>
-    <p>Sensor Acess: {JSON.stringify($SensorAccess)} Orientation Data: {JSON.stringify($OrientationData)}</p>
+    {#if $SensorAccess}
+        <div id="slider"></div>
+        <p>Sensor Acess: {JSON.stringify($SensorAccess)} Orientation Data: {JSON.stringify($OrientationData)}</p>
+    {:else if $SensorAccess === false}
+        <p>No Gyroscope Data available</p>
+    {:else}
+        <button onclick={handleGyroActivationClick}>Activate Gyroscope</button>
+    {/if}
+
+    
+    
 </div>
 
 <style>
@@ -54,5 +62,10 @@
         align-items: center;
         justify-content: center;
         gap: 1rem;
+    }
+
+    p {
+        width: 100vw;
+        text-align: center;
     }
 </style>
