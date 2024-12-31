@@ -23,7 +23,7 @@ const EVENTS = {
 };
 
 export function createSocket() {
-	socket = io(getSocketAdress(), {
+	socket = io("http://192.168.178.45:4444", {
 		reconnection: true,
 		transports: ['websocket'],
 		query: { clientType: ORIGIN },
