@@ -8,7 +8,6 @@
 	const CIRCLE_DIAMETER =  0.8;
 	const TOUCHPOINT_DIAMETER = 0.1;
 
-
 	let canvasWrapper;
 
 	let circleDiameter;
