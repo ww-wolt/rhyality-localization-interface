@@ -2,4 +2,5 @@
 cd "$(dirname "$0")"
 git pull
 npm i
-npm run start
+npm run build
+npm run preview
