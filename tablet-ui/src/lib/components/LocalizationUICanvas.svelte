@@ -8,7 +8,7 @@
 	const CIRCLE_DIAMETER =  0.8;
 	const TOUCHPOINT_DIAMETER = 0.1;
 
-	let canvasWrapper;
+	let canvasWrapper = $state();
 
 	let circleDiameter;
 	let localizationX = 0, localizationY = 0;
@@ -105,7 +105,7 @@
 	});
 </script>
 
-<div bind:this={canvasWrapper} id="canvasWrapper" />
+<div bind:this={canvasWrapper} id="canvasWrapper"></div>
 
 <style>
 	div {

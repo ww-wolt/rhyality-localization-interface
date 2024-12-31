@@ -70,7 +70,7 @@ function handleAcknoledgment(data) {
 	updateClientList();
 }
 
-// Check every 100ms for non upadted clients
+// Check every 100ms for non updated clients
 function removeOldClientsFromList() {
 	for (const clientName in clientsObject) {
 		if (performance.now() - clientsObject[clientName].lastUpdate > CLIENT_LIST_TIMEOUT) {
