@@ -1,0 +1,19 @@
+{
+  "name": "rhyality-listener",
+  "version": "1.0.0",
+  "description": "",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": " sudo /Users/jonas/.nvm/versions/node/v22.13.1/bin/node /Users/jonas/Documents/01_PROGRAMMING_PROJECTS/RHYALITY_SAID/rhyality-localization-interface/performance-stats/system-info.js",
+    "startOld": "sudo node system-info.js"
+  },
+  "author": "Jonas Wolter",
+  "license": "ISC",
+  "dependencies": {
+    "osc": "^2.4.4",
+    "socket.io-client": "^4.7.5",
+    "systeminformation": "^5.23.8"
+  }
+}
