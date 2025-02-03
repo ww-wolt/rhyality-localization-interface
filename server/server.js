@@ -15,6 +15,7 @@ const EVENTS = {
   ACKNOWLEDGMENT: `${ORIGIN}:acknowledgment`,
 };
 
+// Use pino pretty logger for more readable logs (otherwise it's only JSON)
 const app = Fastify({
   logger: pino({
     transport: {

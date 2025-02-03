@@ -1,5 +1,9 @@
+// const URL = "http://192.168.1.187:4444"
 const SOCKET_SERVER_PORT = 4444;
 const CLIENT_LIST_TIMEOUT = 2000;
+
+// let getSocket = getSocketAdress()
+// console.log("🚀 ~ getSocket:", getSocket)
 
 import { io } from 'socket.io-client';
 import { writable } from 'svelte/store';
@@ -13,17 +17,20 @@ export const radius = writable(null);
 export const clientList = writable([]);
 const clientsObject = {};
 
+
+
 let socket;
 // createSocket();
 
 const ORIGIN = 'tablet';
 const EVENTS = {
 	LOCALIZATION_UPDATE: `${ORIGIN}:localization-update`,
-	ACKNOWLEDGMENT: `${ORIGIN}:acknowledgment`
+	ACKNOWLEDGMENT: `${ORIGIN}:acknowledgment`,
+	FORM_SUBMIT: `${ORIGIN}:form-submit`
 };
 
 export function createSocket() {
-	socket = io("http://192.168.178.45:4444", {
+	socket = io(getSocketAdress(), {
 		reconnection: true,
 		transports: ['websocket'],
 		query: { clientType: ORIGIN },
@@ -134,18 +141,50 @@ function wrapToRange(x, min, max) {
 	return ((((x - min) % d) + d) % d) + min;
 }
 
+export function submitFormData(formData) {
+	const data = {
+		eventName: EVENTS.FORM_SUBMIT,
+		origin: ORIGIN,
+		timestamp: performance.now(),
+		formData: formData
+	};
+	socket.emit(EVENTS.FORM_SUBMIT, data);
+}
+
+// function getSocketAdress() {
+// 	try {
+// 		// Parse the URL
+// 		const url = new URL(window.location.href);
+// 		console.log("🚀 ~ getSocketAdress ~ url:", url)
+
+// 		// Construct the base URL
+// 		const baseUrl = `${url.protocol}//${url.hostname}`;
+
+// 		console.log("🚀 ~ getSocketAdress ~ baseUrl:", baseUrl)
+// 		// Return socket url
+// 		return `${baseUrl}:${SOCKET_SERVER_PORT}`;
+// 	} catch (error) {
+// 		console.error('Socket URL retrieval error:', error);
+// 		return null;
+// 	}
+// }
+
 function getSocketAdress() {
-	try {
-		// Parse the URL
-		const url = new URL(window.location.href);
+    try {
+        // Parse the URL
+        const a = document.createElement('a');
+        a.href = window.location.href;
 
-		// Construct the base URL
-		const baseUrl = `${url.protocol}//${url.hostname}`;
+        // Construct the base URL
+        const baseUrl = `${a.protocol}//${a.hostname}`;
 
-		// Return socket url
-		return `${baseUrl}:${SOCKET_SERVER_PORT}`;
-	} catch (error) {
-		console.error('Socket URL retrieval error:', error);
-		return null;
-	}
+        // Remove the element
+        a.remove();
+
+        // Return socket url
+        return `${baseUrl}:${SOCKET_SERVER_PORT}`;
+    } catch (error) {
+        console.error('Socket URL retrieval error:', error);
+        return null;
+    }
 }

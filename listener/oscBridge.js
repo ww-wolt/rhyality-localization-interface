@@ -2,7 +2,7 @@ import osc from "osc";
 
 const udpPort = new osc.UDPPort({
   localAddress: "127.0.0.1",
-  localPort: 2000,
+  localPort: 2222,
   metadata: true,
 });
 
@@ -26,6 +26,17 @@ export function sendFloat(eventName, value){
       args: [{ type: 'f', value: value }],
     },
     "127.0.0.1",
-    1000
+    1111
+  );
+}
+
+export function sendString(eventName, value){
+  udpPort.send(
+    {
+      address: "/" + eventName,
+      args: [{ type: 's', value: value }],
+    },
+    "127.0.0.1",
+    1111
   );
 }

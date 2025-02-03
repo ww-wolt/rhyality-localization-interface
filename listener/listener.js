@@ -45,6 +45,10 @@ export function createSocket() {
         };
         socket.emit(EVENTS.ACKNOWLEDGMENT, acknowledgmentData);
     });
+    socket.on('tablet:form-submit', (data) => {
+        console.log('tablet:form-submit', data);
+        oscBridge.sendString("formSubmit", data.formData.name);
+    });
 }
 
 
