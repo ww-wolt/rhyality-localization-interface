@@ -32,16 +32,19 @@
 {#if $connected}
     {#if !submitted}
         <div class="container" in:fade={{ duration: 1000 }}>
-            <h1>Welcome to Wave-Caster Entertainment™ !</h1>
-            <p>To join the beta testing program please fill out the form.</p>
+            <div>
+                <img src="/finalLogo_Black.png" alt="" class="logo">
+            </div>
+            <h1>Welcome to Wave-Caster Entertainment™Labs!</h1>
+            <p>To sign up for the beta testing program please fill out the form, and read our terms & conditions.</p>
             <form>
-                <label for="fname">First Name</label><br>
+                <label for="fname">First Name(Username?)</label><br>
                 <input bind:value={name} type="text" id="fname" name="fname" required><br>
                 <div class="checkbox-container">
                     <input type="checkbox" bind:checked={checked} id="terms" required>
-                    <label for="terms">I hereby accept and confirm that I have read all <a href="#" style="color: #00d4a9;">terms and conditions</a>.</label>
+                    <label for="terms">I hereby confirm that I have read, understood and accepted <a href="#" style="color: #00d4a9;">the terms and conditions</a>.</label>
                 </div>
-                <button disabled={!(name && checked)} type="submit" class="button" onclick={submitForm}>Enter ➜</button>
+                <button disabled={!(name && checked)} type="submit" class="button" onclick={submitForm}>Sign up ➜</button>
                 
             </form>
         </div>
@@ -63,10 +66,26 @@
 
 <style>
 
+@font-face {
+    font-family: "Univers";
+    src: url("/fonts/UniversRegular.ttf");
+    font-style: normal;
+    font-weight:normal;
+}
+
+@font-face {
+    font-family: "Univers";
+    src: url("/fonts/UniversBold.ttf");
+    font-style:normal;
+    font-weight:bold;
+}
+ 
+ 
+
     .container, .container2 {
         max-width: 500px;
         margin: auto;
-        margin-top: 180px;
+        margin-top: 80px;
         font-size: large;
     }
 
@@ -75,33 +94,63 @@
         margin: 0 auto;
         display: block;
     }
+    
+    .logo {
+      width:15%;
+      margin: 0 auto;
+      margin-bottom: 130px;
+    }
 
     h1 {
-        font-size: 3.6rem;
+        font-size: 2rem;
         /* margin-bottom: 10px; */
         line-height: 1.25;
+        font-family:"Univers";
+        margin-bottom:60px;
     }
+
+    p {
+        font-family:"Univers";
+        font-weight:normal;
+        font-size: 1rem;
+        margin-bottom:90px;
+    }
+
     form {
+        font-family:"Univers";
+        font-size: 1rem;
+        font-weight:normal;
         margin-top: 30px;
     }
     input[type="text"] {
-        width: 100%;
+        width: 90%;
+        height:1rem;
+        font-size:1rem;
         padding: 10px;
         margin-top: 10px;
         margin-bottom: 5px;
+        background-color: rgb(23, 23, 23);
+        border-radius: 5px;
+        border:none;
+        color:white;
     }
     .checkbox-container {
         display: flex;
         align-items: top;
         justify-content: start;
-        margin-top: 10px;
+        margin-top: 60px;
         margin-bottom: 20px;
     }
     input[type="checkbox"] {
         margin-right: 10px;
         margin-left: 0px;
-        width: 30px;
-        height: 30px;
+        width: 25px;
+        height: 25px;
+        accent-color:  #00d4a9;
+        background-color: rgb(23, 23, 23);
+       
+        
+       
     }
     .button {
         background-color: #00d4a9;
