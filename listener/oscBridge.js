@@ -26,7 +26,7 @@ export function sendFloat(eventName, value){
       args: [{ type: 'f', value: value }],
     },
     "127.0.0.1",
-    1111
+    1289
   );
 }
 
@@ -37,6 +37,6 @@ export function sendString(eventName, value){
       args: [{ type: 's', value: value }],
     },
     "127.0.0.1",
-    1111
+    1289
   );
 }
