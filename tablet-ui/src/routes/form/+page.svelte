@@ -1,5 +1,5 @@
 <script>
-    const TIMEOUT = 3000;
+    const TIMEOUT = 10000;
     
     import { connected, createSocket } from '$lib/services/SocketIOClient.js';
 	import { onMount } from 'svelte';
@@ -54,8 +54,8 @@
         </div>
     {:else}
         <div class="container2" in:fly={{ y: 200, duration: 2000 }}>
-            <img src="/arrow.svg" alt="">
-            <h1 in:fly={{ y: 200, duration: 3000 }}>Thank you for being so generous with your data!</h1>
+            <img src="/arrowWhite.svg" alt="">
+            <h1 in:fly={{ y: 200, duration: 3000 }} class="enjoy">Enjoy the show!</h1>
         </div>
     {/if}
     
@@ -70,7 +70,7 @@
     <div class="modal-backdrop" onclick={()=>{showModal = false}}></div>
     <div class="modal">
         <div class="modal-content">
-            <div class="grid-cols-1 grid gap-2.5 [&amp;_>_*]:min-w-0"><p class="whitespace-pre-wrap break-words">WAVECASTER™ ENTERTAINMENT - BETA TESTING AGREEMENT AND TERMS OF SERVICE
+            <div class="grid-cols-1 grid gap-2.5 [&amp;_>_*]:min-w-0"><p class="whitespace-pre-wrap break-words terms">WAVECASTER™ ENTERTAINMENT - BETA TESTING AGREEMENT AND TERMS OF SERVICE
                 Version 4.2.1 (February 2025)</p>
                 <ol class="[&amp;:not(:last-child)_ul]:pb-1 [&amp;:not(:last-child)_ol]:pb-1 list-decimal space-y-1.5 pl-7" depth="0">
                 <li class="whitespace-normal break-words" index="0">DEFINITIONS
@@ -112,11 +112,9 @@
                 10.1 Participant grants WaveCaster™ a non-exclusive lease on their soul for the duration of the Experience (see Section 1.3).
                 10.2 Metaphysical properties are subject to Section 4.1 and may be referenced in future amendments to Section 6.1.</li>
                 </ol>
-                <p class="whitespace-pre-wrap break-words">By signing below, you acknowledge that you have read, understood, and accepted these terms, even if you haven't (as permitted by Section 13.7, which doesn't exist).</p>
-                <p class="whitespace-pre-wrap break-words">Signature: _______________________
-                Date: __________________________
-                Quantum State: __________________</p>
-                <p class="whitespace-pre-wrap break-words">Note: This agreement is legally binding in all known and unknown dimensions, including those referenced in sections that reference other sections that may or may not exist.</p></div>
+                <p class="whitespace-pre-wrap break-words terms">By checking the box, you acknowledge that you have read, understood, and accepted these terms, even if you haven't (as permitted by Section 13.7, which doesn't exist).</p>
+               
+                <p class="whitespace-pre-wrap break-words terms">Note: This agreement is legally binding in all known and unknown dimensions, including those referenced in sections that reference other sections that may or may not exist.</p></div>
             <button class="close-button" onclick={()=>{showModal = false}}>Close</button>
         </div>
     </div>
@@ -149,20 +147,14 @@
         font-size: large;
     }
 
-    img {
-        width: 50%;
-        margin: 0 auto;
-        display: block;
-    }
-    
     .logo {
       width:18%;
       margin: 0 auto;
-      margin-bottom: 130px;
+      margin-bottom: 100px;
     }
 
     h1 {
-        font-size: 2.2rem;
+        font-size: 2.4rem;
         /* margin-bottom: 10px; */
         line-height: 1.25;
         font-family:"Univers";
@@ -172,13 +164,31 @@
     p {
         font-family:"Univers";
         font-weight:normal;
+        font-size: 1.3rem;
+        margin-bottom:30px;
+    }
+
+    .terms {
+
+        font-family:"Univers";
+        font-weight:normal;
         font-size: 1rem;
-        margin-bottom:90px;
+        margin-bottom:30px;
+    }
+
+    .enjoy{
+        margin-top: 150px;
+        text-align: center;
+    }
+    
+
+    li {
+        margin-bottom:25px;
     }
 
     form {
         font-family:"Univers";
-        font-size: 1rem;
+        font-size: 1.2rem;
         font-weight:normal;
         margin-top: 30px;
     }
@@ -187,7 +197,7 @@
         height:1rem;
         font-size:1rem;
         padding: 10px;
-        margin-top: 10px;
+        margin-top: 4px;
         margin-bottom: 5px;
         background-color: rgb(23, 23, 23);
         border-radius: 5px;
@@ -212,6 +222,14 @@
         
        
     }
+
+    img {
+  width: 170px;
+  margin-top: 100px;
+  margin: 0 auto;
+  display: block;
+}
+
     .button {
         background-color: #00d4a9;
         color: black;
