@@ -71,7 +71,7 @@
     <div class="modal">
         <div class="modal-content">
             <div class="grid-cols-1 grid gap-2.5 [&amp;_>_*]:min-w-0"><p class="whitespace-pre-wrap break-words terms">WAVECASTER™ ENTERTAINMENT - BETA TESTING AGREEMENT AND TERMS OF SERVICE
-                Version 4.2.1 (February 2025)</p>
+                Version 4.2.1 (September 2025)</p>
                 <ol class="[&amp;:not(:last-child)_ul]:pb-1 [&amp;:not(:last-child)_ol]:pb-1 list-decimal space-y-1.5 pl-7" depth="0">
                 <li class="whitespace-normal break-words" index="0">DEFINITIONS
                 1.1 "Experience" refers to any sensory, emotional, physiological, or cognitive interaction within the WaveCaster™ Concert Lab environment.
